@@ -1,37 +1,58 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-ll ld[4]={-1,0,1,0},a[1001][1001],j,n,m,u,d,dem,ma,v,i,cx[1001][1001];
-ll lc[4]={0,-1,0,1};
-void dfs(int u, int v)
+long long u,v,i,dem2,demmax,tam,j,d,n,m,k,a[1001][1001],cx[1001][1001];
+int vx[4] = {0,-1,0,1};
+int vy[4] = {-1,0,1,0};
+queue <long long> qx,qy;
+void bfs(long long u,long long v)
 {
-    int dm,cm,j;
-    d++;
-    cx[u][v] = 0;
-    for(j=0;j<=3;j++){
-        dm = u+ld[j];
-        cm = v+lc[j];
-        if (a[dm][cm]==0 && cx[dm][cm]==1 &&dm > 0 &&dm <=m && cm>0&&cm<=n)
-            dfs(dm,cm);
+      cx[u][v] = 0;
+    qx.push(u);
+    qy.push(v);
+    long long x,y,xx,yy;
+    while(!qy.empty()) {
+        x = qx.front();
+        y = qy.front();
+        qx.pop();
+        qy.pop();
+        for(k=0;k<=3;k++) {
+            xx = x+vx[k];
+            yy = y+vy[k];
+            if(xx>0 && xx<=n && yy >0 && yy <= m && cx[xx][yy] == 1 && a[xx][yy] == 0 ) {
+                d++;
+                cx[xx][yy] = 0;
+                a[xx][yy] = 1;
+                qx.push(xx);
+                qy.push(yy);
+            }
+        }
     }
 }
-
 int main()
 {
-    cin>>m>>n;
-    for(i=1;i<=m;i++)
-        for(j=1;j<=n;j++)
-        {cin>>a[i][j];
-         cx[i][j]=1;
-        }
-    for(i=1;i<=m;i++)
-        for(j=1;j<=n;j++)
-            if(a[i][j]==0 && cx[i][j]==1)
+    ifstream fin("aonuoc.inp");
+    ofstream fout("aonuoc.out");
+    fin>>n>>m;
+     for(i=1;i<=n;i++)
+        for(j=1;j<=m;j++)
         {
-                d=0;
-                dfs(i,j);
-                dem++;
-                ma=max(ma,d);
+            fin>>a[i][j];
+            cx[i][j]=1;
         }
-    cout<<dem<<endl<<ma;
+    for(i=1;i<=n;i++)
+    {
+        if(a[i][1] == 0) a[i][1] = 1;
+        if(a[1][i] == 0) a[1][i] = 1;
+    }
+     for(i=2;i<=n;i++)
+        for(j=1;j<=m;j++)
+        {
+            if(a[i][j] == 0 && cx[i][j] == 1) {
+                d = 1;
+                bfs(i,j);
+                dem2++;
+                demmax = max(demmax,d);
+            }
+        }
+    fout<<dem2<<endl<<demmax;
 }
