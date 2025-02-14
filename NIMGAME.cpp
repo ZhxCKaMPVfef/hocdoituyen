@@ -21,57 +21,37 @@ int main()
       cin>>a[i];
       total+=a[i];
     }
-    if(n%2==0){
-        ditruoc = true;
-        cout<<1<<endl;
-    }
-    else{
-        ditruoc = false;
-        cout<<0<<endl;
-    }
+    int tam = 0;
     getvaluemax();
     while(total > 0 || xvalue > 0) {
-        if(ditruoc){
-            if(total%2==0){
-                cout<<ipos<<" "<<xvalue<<endl;
-                a[ipos] -=xvalue;
-                total-=xvalue;
-            }
-            else
-            {
-                cout<<ipos<<" "<<xvalue/2<<endl;
-                a[ipos] -=xvalue/2;
-                total-=xvalue/2;
-            }
-        }
+
         cin>>pos>>collect;
+
+        tam =  a[pos];
         a[pos]-= collect;
         total-=collect;
-        npc = true;
-        player = false;
+        if(a[pos] < 0){
+            a[pos] = 0;
+            total+=(collect - tam);
+        }
         //break;
-  //     for(i=1;i<=n;i++) cout<<a[i]<<" ";
-    //    cout<<endl;
+      for(i=1;i<=n;i++) cout<<a[i]<<" ";
+        cout<<endl;
         getvaluemax();
         if(xvalue <= 0) break;
-        if(total%2 == 0) {
-            cout<<ipos<<" "<<xvalue<<endl;
-            total-=xvalue;
-            a[ipos] -= xvalue;
-        } else {
-            if(xvalue/2 > 0){
-                total = total - (xvalue/2);
-                a[ipos] = a[ipos] - (xvalue/2);
-                cout<<ipos<<" "<<xvalue/2<<endl;
-            }
-            else{
-                cout<<ipos<<" "<<xvalue<<endl;
-                total = total - (xvalue );
-                a[ipos] = a[ipos] - (xvalue );
-            }
+          cin>>pos>>collect;
+        tam =  a[pos];
+        a[pos]-= collect;
+        total-=collect;
+        if(a[pos] < 0){
+            a[pos] = 0;
+            total+=(collect - tam);
         }
-     //   for(i=1;i<=n;i++) cout<<a[i]<<" ";
-      //  cout<<endl;
+        // 1 - 2 = -1
+        // a - b = c
+        //c+= b-a
+        for(i=1;i<=n;i++) cout<<a[i]<<" ";
+        cout<<endl;
         getvaluemax();
         if(xvalue <= 0) break;
     }
