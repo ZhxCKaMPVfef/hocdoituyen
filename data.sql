@@ -53,4 +53,4 @@ SELECT thang,AVG(SOKW), khach_hang.Ma_KH, khach_hang.hovaten, chitiet_sd.Ma_Kh A
 -- FROM chitiet_sd 
 FROM khach_hang INNER JOIN chitiet_sd
 on khach_hang.Ma_KH = chitiet_sd.Ma_KH
-GROUP BY thang
+GROUP BY Ma_KH, hovaten
