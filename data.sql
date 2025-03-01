@@ -40,3 +40,17 @@ INSERT INTO chitiet_sd VALUES
 
 SELECT *  FROM  khach_hang
 Where diachi = 'Sa Đéc'
+SELECT khach_hang.Ma_KH, khach_hang.hovaten,chitiet_sd.Ma_Loai, chitiet_sd.Thang,chitiet_sd.SOKW,
+loai_sd.donggia*chitiet_sd.sokw AS thanhtien,
+IF(chitiet_sd.SOKW>300, (loai_sd.donggia*chitiet_sd.sokw)*10/100 , 0) AS thue,
+
+FROM khach_hang INNER JOIN chitiet_sd
+ON khach_hang.Ma_KH = chitiet_sd.Ma_Kh
+INNER JOIN loai_sd
+ON chitiet_sd.Ma_Loai = loai_sd.ma_loai;
+----------------------------------------
+SELECT thang,AVG(SOKW), khach_hang.Ma_KH, khach_hang.hovaten, chitiet_sd.Ma_Kh AS totalkw
+-- FROM chitiet_sd 
+FROM khach_hang INNER JOIN chitiet_sd
+on khach_hang.Ma_KH = chitiet_sd.Ma_KH
+GROUP BY thang
