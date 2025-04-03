@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-long long n,m,u,v,s,i,truoc[1000006],d,buoc[1000006],cx[1000006],a1,b;
+long long n,m,u,v,s,i,truoc[1000006],d,buoc[1000006],cx[1000006],a1,b,c;
 vector <long long> a[1000006];
 queue <long long> q;
 void bfs(long long u) {
@@ -16,8 +16,7 @@ void bfs(long long u) {
             long long v = a[t][j];
             if(!cx[v]) {
                 cx[v] = 1;
-                truoc[j] = t;
-                buoc[v] = buoc[u]+1;
+                truoc[v] = t;
                 q.push(v);
             }
         }
@@ -30,16 +29,17 @@ int main()
     fin>>n>>a1>>b;
     for(i=1;i<=n;i++) {
         fin>>u>>v;
+        a[v].push_back(u);
         a[u].push_back(v);
     }
-    for(i=a1;i<=b;i++) {
-        truoc[b] = -1;
-        if(!cx[i]) {
-            bfs(i);
-        }
-        if(truoc[b] != 0) d++;
+    bfs(a1);
+    c = b;
+    while(truoc[c] != 0)
+    {
+        d++;
+        c = truoc[c];
     }
     if(d > 0)
-    fout<<d;
+    fout<<d-1;
     else fout<<-1;
 }
